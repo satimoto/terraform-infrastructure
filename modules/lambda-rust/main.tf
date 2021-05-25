@@ -1,7 +1,5 @@
 locals {
-  resource_path = abspath("../../resources/lambda")
-  root_path     = abspath(var.resource_path)
-  source_path   = "${local.root_path}/${var.lambda_function_name}"
+  source_path   = "${abspath(var.resource_path)}/${var.lambda_function_name}"
   function_name = "${var.prefix_name}${var.lambda_function_name}"
   source_code   = join("", [for file in fileset(local.source_path, "*") : filesha1("${local.source_path}/${file}")])
 }
@@ -16,7 +14,7 @@ resource "null_resource" "package_lambda" {
   }
 
   provisioner "local-exec" {
-    command = "bash .${local.resource_path}/rust-packager.sh"
+    command = "bash .${path.module}/rust-packager.sh"
 
     environment = {
       SOURCE_PATH  = local.source_path
@@ -57,7 +55,7 @@ resource "aws_s3_bucket_object" "lambda_object" {
 resource "aws_iam_role" "lambda_role" {
   name = "lambda-${var.deployment_stage}-${var.lambda_function_name}-role"
 
-  assume_role_policy = file("${local.resource_path}/lambda-role.json")
+  assume_role_policy = file("${path.module}/lambda-role.json")
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_role_attachment" {
