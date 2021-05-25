@@ -12,6 +12,12 @@ variable "availability_zones" {
   description = "A list of Availability Zones where subnets and DB instances can be created"
 }
 
+variable "allowed_account_ids" {
+  description = "The AWS region"
+  type        = list(string)
+  default     = []
+}
+
 # -----------------------------------------------------------------------------
 # Module subdomain
 # -----------------------------------------------------------------------------
