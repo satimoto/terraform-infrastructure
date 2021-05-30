@@ -3,7 +3,7 @@
 # -----------------------------------------------------------------------------
 
 resource "aws_security_group" "rds_cluster" {
-  name        = "${var.deployment_stage}-rds-cluster"
+  name        = "rds-cluster"
   description = "RDS Security Group"
   vpc_id      = var.vpc_id
 
@@ -51,7 +51,7 @@ resource "aws_security_group_rule" "nat_rds_egress_rule" {
 # -----------------------------------------------------------------------------
 
 resource "aws_db_subnet_group" "rds_cluster" {
-  name       = "${var.deployment_stage}-rds-subnet-group"
+  name       = "rds-subnet-group"
   subnet_ids = var.private_subnet_ids
 }
 

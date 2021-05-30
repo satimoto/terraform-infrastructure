@@ -2,6 +2,7 @@ locals {
   source_path   = "${abspath(var.resource_path)}/${var.lambda_function_name}"
   function_name = "${var.prefix_name}${var.lambda_function_name}"
   source_code   = join("", [for file in fileset(local.source_path, "*") : filesha1("${local.source_path}/${file}")])
+  name_snake_case = lower(replace(replace(var.lambda_function_name, "_", "-"), " ", "-"))
 }
 
 # -----------------------------------------------------------------------------
@@ -36,7 +37,7 @@ data "local_file" "packaged_zip" {
 
 resource "aws_s3_bucket" "lambda_bucket" {
   acl    = "private"
-  bucket = "satimoto-${var.deployment_stage}-lambda-${var.lambda_function_name}"
+  bucket = "satimoto-${var.deployment_stage}-${local.name_snake_case}-lambda-function"
 }
 
 resource "aws_s3_bucket_object" "lambda_object" {
@@ -53,7 +54,7 @@ resource "aws_s3_bucket_object" "lambda_object" {
 # -----------------------------------------------------------------------------
 
 resource "aws_iam_role" "lambda_role" {
-  name = "lambda-${var.deployment_stage}-${var.lambda_function_name}-role"
+  name = "lambda-${var.lambda_function_name}-role"
 
   assume_role_policy = file("${path.module}/lambda-role.json")
 }

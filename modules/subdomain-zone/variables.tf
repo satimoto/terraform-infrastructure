@@ -19,9 +19,13 @@ variable "allowed_account_ids" {
 }
 
 # -----------------------------------------------------------------------------
-# Module subdomain
+# Module subdomain-zone
 # -----------------------------------------------------------------------------
 
-variable "subdomain_name" {
-  description = "The subdomain name of the api"
+variable "domain_name" {
+  description = "The domain name of the zone"
+}
+
+variable "zone_subdomain_name" {
+  description = "The subdomain name of the zone"
 }

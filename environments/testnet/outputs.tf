@@ -1,3 +1,23 @@
+output "acm_certificate_id" {
+  description = "The ACM certificate ID"
+  value       = data.terraform_remote_state.common.outputs.acm_certificate_id
+}
+
+output "acm_certificate_arn" {
+  description = "The ACM certificate ARN"
+  value       = data.terraform_remote_state.common.outputs.acm_certificate_arn
+}
+
+output "route53_zone_id" {
+  description = "The Route53 Zone ID"
+  value       = data.terraform_remote_state.common.outputs.route53_zone_id
+}
+
+output "route53_zone_name" {
+  description = "The Route53 Zone name"
+  value       = data.terraform_remote_state.common.outputs.route53_zone_name
+}
+
 output "vpc_id" {
   description = "The ID of the VPC"
   value       = module.network.vpc_id
@@ -21,4 +41,14 @@ output "private_subnet_ids" {
 output "private_subnet_cidrs" {
   description = "The CIDRs of private subnets"
   value       = module.network.private_subnet_cidrs
+}
+
+output "subdomain_route53_zone_id" {
+  description = "The subdomain Route53 Zone ID"
+  value       = module.subdomain_zone.route53_zone_id
+}
+
+output "subdomain_route53_zone_name" {
+  description = "The subdomain Route53 Zone name"
+  value       = module.subdomain_zone.route53_zone_name
 }

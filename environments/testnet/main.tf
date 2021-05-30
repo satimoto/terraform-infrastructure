@@ -58,3 +58,14 @@ module "database" {
   rds_cluster_engine                  = var.rds_cluster_engine
   rds_cluster_engine_mode             = var.rds_cluster_engine_mode
 }
+
+module "subdomain_zone" {
+  source              = "../../modules/subdomain-zone"
+  availability_zones  = var.availability_zones
+  deployment_stage    = var.deployment_stage
+  region              = var.region
+  allowed_account_ids = var.allowed_account_ids
+
+  domain_name = data.terraform_remote_state.common.outputs.route53_zone_name
+  zone_subdomain_name = var.zone_subdomain_name
+}

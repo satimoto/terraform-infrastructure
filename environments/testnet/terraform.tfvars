@@ -4,7 +4,7 @@ availability_zones = ["eu-central-1a", "eu-central-1b", "eu-central-1c"]
 
 deployment_stage = "testnet"
 
-allowed_account_ids = ["759709512347"]
+allowed_account_ids = ["393419211193", "759709512347"]
 
 # -----------------------------------------------------------------------------
 # Module networking
@@ -29,3 +29,9 @@ rds_cluster_backup_retention_period = 7
 rds_cluster_engine = "aurora-postgresql"
 
 rds_cluster_engine_mode = "serverless"
+
+# -----------------------------------------------------------------------------
+# Module subdomain_zone
+# -----------------------------------------------------------------------------
+
+zone_subdomain_name = "testnet"

@@ -67,7 +67,7 @@ resource "aws_route_table_association" "public_subnet_routes" {
 # -----------------------------------------------------------------------------
 
 resource "aws_security_group" "nat_instance" {
-  name        = "${var.deployment_stage}-bastion-nat"
+  name        = "bastion-nat"
   description = "NAT Security Group"
   vpc_id      = aws_vpc.vpc.id
 

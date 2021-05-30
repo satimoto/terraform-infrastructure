@@ -9,7 +9,7 @@ provider "aws" {
 # -----------------------------------------------------------------------------
 
 resource "aws_route53_zone" "zone" {
-  name = "${var.subdomain_name}.${var.domain_name}"
+  name = "${var.zone_subdomain_name}.${var.domain_name}"
 }
 
 # -----------------------------------------------------------------------------

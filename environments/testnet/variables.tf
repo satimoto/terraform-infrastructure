@@ -88,3 +88,11 @@ variable "rds_cluster_scaling_configuration_timeout_action" {
   description = "The action to take when the timeout is reached"
   default     = "RollbackCapacityChange"
 }
+
+# -----------------------------------------------------------------------------
+# Module subdomain_zone
+# -----------------------------------------------------------------------------
+
+variable "zone_subdomain_name" {
+  description = "The subdomain name of the Route53 zone"
+}

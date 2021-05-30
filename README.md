@@ -1,5 +1,5 @@
 # terraform-infrastructure
-Satimoto Infrastructure using terraform
+Satimoto infrastructure using terraform
 
 ## lambda-rust module usage
 
