@@ -12,8 +12,8 @@ variable "availability_zones" {
   description = "A list of Availability Zones where subnets and DB instances can be created"
 }
 
-variable "allowed_account_ids" {
-  description = "The AWS region"
+variable "forbidden_account_ids" {
+  description = "The forbidden account IDs"
   type        = list(string)
   default     = []
 }
@@ -26,6 +26,10 @@ variable "domain_name" {
   description = "The domain name of the zone"
 }
 
-variable "zone_subdomain_name" {
+variable "subdomain_name" {
   description = "The subdomain name of the zone"
+}
+
+variable "route53_zone_id" {
+  description = "The Route53 Zone ID"
 }

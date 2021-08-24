@@ -4,7 +4,20 @@ availability_zones = ["eu-central-1a", "eu-central-1b", "eu-central-1c"]
 
 deployment_stage = "testnet"
 
-allowed_account_ids = ["393419211193", "759709512347"]
+forbidden_account_ids = ["147553084273"]
+
+# -----------------------------------------------------------------------------
+# Module subdomain_zone
+# -----------------------------------------------------------------------------
+
+zone_domain_name = "satimoto.com"
+zone_subdomain_name = "testnet"
+
+# -----------------------------------------------------------------------------
+# Module certificate
+# -----------------------------------------------------------------------------
+
+domain_name = "testnet.satimoto.com"
 
 # -----------------------------------------------------------------------------
 # Module networking
@@ -29,9 +42,3 @@ rds_cluster_backup_retention_period = 7
 rds_cluster_engine = "aurora-postgresql"
 
 rds_cluster_engine_mode = "serverless"
-
-# -----------------------------------------------------------------------------
-# Module subdomain_zone
-# -----------------------------------------------------------------------------
-
-zone_subdomain_name = "testnet"

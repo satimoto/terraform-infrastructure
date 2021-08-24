@@ -12,10 +12,18 @@ variable "deployment_stage" {
   default     = "mainnet"
 }
 
-variable "allowed_account_ids" {
-  description = "The AWS region"
+variable "forbidden_account_ids" {
+  description = "The forbidden account IDs"
   type        = list(string)
   default     = []
+}
+
+# -----------------------------------------------------------------------------
+# Module certificate
+# -----------------------------------------------------------------------------
+
+variable "domain_name" {
+  description = "The domain name the certificate and zone is associated to"
 }
 
 # -----------------------------------------------------------------------------

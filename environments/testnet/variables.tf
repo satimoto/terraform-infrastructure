@@ -12,10 +12,30 @@ variable "deployment_stage" {
   default     = "mainnet"
 }
 
-variable "allowed_account_ids" {
-  description = "The AWS region"
+variable "forbidden_account_ids" {
+  description = "The forbidden account IDs"
   type        = list(string)
   default     = []
+}
+
+# -----------------------------------------------------------------------------
+# Module subdomain_zone
+# -----------------------------------------------------------------------------
+
+variable "zone_domain_name" {
+  description = "The domain name of the root zone"
+}
+
+variable "zone_subdomain_name" {
+  description = "The subdomain name to create a nameserver record for"
+}
+
+# -----------------------------------------------------------------------------
+# Module certificate
+# -----------------------------------------------------------------------------
+
+variable "domain_name" {
+  description = "The domain name the certificate and zone is associated to"
 }
 
 # -----------------------------------------------------------------------------
@@ -87,12 +107,4 @@ variable "rds_cluster_scaling_configuration_seconds_until_auto_pause" {
 variable "rds_cluster_scaling_configuration_timeout_action" {
   description = "The action to take when the timeout is reached"
   default     = "RollbackCapacityChange"
-}
-
-# -----------------------------------------------------------------------------
-# Module subdomain_zone
-# -----------------------------------------------------------------------------
-
-variable "zone_subdomain_name" {
-  description = "The subdomain name of the Route53 zone"
 }

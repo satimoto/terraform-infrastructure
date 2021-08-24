@@ -19,3 +19,7 @@ variable "availability_zones" {
 variable "domain_name" {
   description = "The domain name the certificate and zone is associated to"
 }
+
+variable "route53_zone_id" {
+  description = "The Route53 Zone ID"
+}

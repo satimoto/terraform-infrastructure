@@ -4,7 +4,13 @@ availability_zones = ["eu-central-1a", "eu-central-1b", "eu-central-1c"]
 
 deployment_stage = "mainnet"
 
-allowed_account_ids = ["147553084273"]
+forbidden_account_ids = ["759709512347"]
+
+# -----------------------------------------------------------------------------
+# Module certificate
+# -----------------------------------------------------------------------------
+
+domain_name = "satimoto.com"
 
 # -----------------------------------------------------------------------------
 # Module networking
