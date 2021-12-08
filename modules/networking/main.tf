@@ -87,7 +87,7 @@ resource "aws_security_group_rule" "nat_private_http_ingress_rule" {
   protocol          = "tcp"
   cidr_blocks       = aws_subnet.private_subnets.*.cidr_block
   security_group_id = aws_security_group.nat_instance.id
-  description       = "Private to HTTP"
+  description       = "HTTP from Private to NAT"
 }
 
 resource "aws_security_group_rule" "nat_private_https_ingress_rule" {
@@ -97,17 +97,17 @@ resource "aws_security_group_rule" "nat_private_https_ingress_rule" {
   protocol          = "tcp"
   cidr_blocks       = aws_subnet.private_subnets.*.cidr_block
   security_group_id = aws_security_group.nat_instance.id
-  description       = "Private to HTTPS"
+  description       = "HTTPS from Private to NAT"
 }
 
-resource "aws_security_group_rule" "nat_any_ssh_ingress_rule" {
+resource "aws_security_group_rule" "nat_private_smtp_ingress_rule" {
   type              = "ingress"
-  from_port         = 22
-  to_port           = 22
+  from_port         = 587
+  to_port           = 587
   protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"]
+  cidr_blocks       = aws_subnet.private_subnets.*.cidr_block
   security_group_id = aws_security_group.nat_instance.id
-  description       = "Any to SSH"
+  description       = "SMTP from Private to NAT"
 }
 
 resource "aws_security_group_rule" "nat_private_icmp_ingress_rule" {
@@ -117,27 +117,17 @@ resource "aws_security_group_rule" "nat_private_icmp_ingress_rule" {
   protocol          = "icmp"
   cidr_blocks       = aws_subnet.private_subnets.*.cidr_block
   security_group_id = aws_security_group.nat_instance.id
-  description       = "Private to ICMP"
+  description       = "ICMP from Private to NAT"
 }
 
-resource "aws_security_group_rule" "nat_any_http_egress_rule" {
-  type              = "egress"
-  from_port         = 80
-  to_port           = 80
+resource "aws_security_group_rule" "nat_any_ssh_ingress_rule" {
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = aws_security_group.nat_instance.id
-  description       = "Any to HTTP"
-}
-
-resource "aws_security_group_rule" "nat_any_https_egress_rule" {
-  type              = "egress"
-  from_port         = 443
-  to_port           = 443
-  protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.nat_instance.id
-  description       = "Any to HTTPS"
+  description       = "SSH from Any to NAT"
 }
 
 resource "aws_security_group_rule" "nat_private_ssh_egress_rule" {
@@ -147,7 +137,37 @@ resource "aws_security_group_rule" "nat_private_ssh_egress_rule" {
   protocol          = "tcp"
   cidr_blocks       = aws_subnet.private_subnets.*.cidr_block
   security_group_id = aws_security_group.nat_instance.id
-  description       = "Private to SSH"
+  description       = "SSH to Private from NAT"
+}
+
+resource "aws_security_group_rule" "nat_any_http_egress_rule" {
+  type              = "egress"
+  from_port         = 80
+  to_port           = 80
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.nat_instance.id
+  description       = "HTTP to Any from NAT"
+}
+
+resource "aws_security_group_rule" "nat_any_https_egress_rule" {
+  type              = "egress"
+  from_port         = 443
+  to_port           = 443
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.nat_instance.id
+  description       = "HTTPS to Any from NAT"
+}
+
+resource "aws_security_group_rule" "nat_any_smtp_egress_rule" {
+  type              = "egress"
+  from_port         = 587
+  to_port           = 587
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.nat_instance.id
+  description       = "SMTP to Any from NAT"
 }
 
 resource "aws_security_group_rule" "nat_any_icmp_egress_rule" {
@@ -157,7 +177,7 @@ resource "aws_security_group_rule" "nat_any_icmp_egress_rule" {
   protocol          = "icmp"
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = aws_security_group.nat_instance.id
-  description       = "Any to ICMP"
+  description       = "ICMP to Any from NAT"
 }
 
 # -----------------------------------------------------------------------------
@@ -165,7 +185,7 @@ resource "aws_security_group_rule" "nat_any_icmp_egress_rule" {
 # -----------------------------------------------------------------------------
 
 resource "aws_instance" "nat_instance" {
-  ami                         = "ami-024107e3e3217a248"
+  ami                         = "ami-001b36cbc16911c13"
   associate_public_ip_address = true
   availability_zone           = aws_subnet.public_subnets.0.availability_zone
   instance_type               = "t2.micro"
