@@ -18,27 +18,32 @@ output "route53_zone_name" {
   value       = data.aws_route53_zone.zone.name
 }
 
-# output "vpc_id" {
-#   description = "The ID of the VPC"
-#   value       = module.network.vpc_id
-# }
+output "vpc_id" {
+  description = "The ID of the VPC"
+  value       = module.network.vpc_id
+}
 
-# output "public_subnet_ids" {
-#   description = "The IDs of public subnets"
-#   value       = module.network.public_subnet_ids
-# }
+output "public_subnet_ids" {
+  description = "The IDs of public subnets"
+  value       = module.network.public_subnet_ids
+}
 
-# output "public_subnet_cidrs" {
-#   description = "The CIDRs of public subnets"
-#   value       = module.network.public_subnet_cidrs
-# }
+output "public_subnet_cidrs" {
+  description = "The CIDRs of public subnets"
+  value       = module.network.public_subnet_cidrs
+}
 
-# output "private_subnet_ids" {
-#   description = "The IDs of private subnets"
-#   value       = module.network.private_subnet_ids
-# }
+output "private_subnet_ids" {
+  description = "The IDs of private subnets"
+  value       = module.network.private_subnet_ids
+}
 
-# output "private_subnet_cidrs" {
-#   description = "The CIDRs of private subnets"
-#   value       = module.network.private_subnet_cidrs
-# }
+output "private_subnet_cidrs" {
+  description = "The CIDRs of private subnets"
+  value       = module.network.private_subnet_cidrs
+}
+
+output "nat_security_group_id" {
+  description = "The security group ID of the NAT instance"
+  value       = module.network.nat_security_group_id
+}
