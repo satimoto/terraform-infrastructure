@@ -23,7 +23,7 @@ resource "aws_security_group_rule" "rds_private_rds_ingress_rule" {
   protocol          = "tcp"
   cidr_blocks       = var.private_subnet_cidrs
   security_group_id = aws_security_group.rds_cluster.id
-  description       = "Private to RDS"
+  description       = "PG from Private to RDS"
 }
 
 resource "aws_security_group_rule" "rds_nat_rds_ingress_rule" {
@@ -33,7 +33,7 @@ resource "aws_security_group_rule" "rds_nat_rds_ingress_rule" {
   protocol                 = "tcp"
   security_group_id        = aws_security_group.rds_cluster.id
   source_security_group_id = var.nat_security_group_id
-  description              = "NAT to RDS"
+  description              = "PG from NAT to RDS"
 }
 
 resource "aws_security_group_rule" "nat_rds_egress_rule" {
@@ -43,7 +43,7 @@ resource "aws_security_group_rule" "nat_rds_egress_rule" {
   protocol                 = "tcp"
   security_group_id        = var.nat_security_group_id
   source_security_group_id = aws_security_group.rds_cluster.id
-  description              = "NAT to RDS"
+  description              = "PG to RDS from NAT"
 }
 
 # -----------------------------------------------------------------------------

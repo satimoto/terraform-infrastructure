@@ -3,7 +3,7 @@ terraform {
     aws = {
       source  = "hashicorp/aws"
       version = ">= 3.55.0"
-      configuration_aliases = [ aws.us_east_1, aws.zone_owner ]
+      configuration_aliases = [ aws.certificate_owner, aws.zone_owner ]
     }
   }
 }
@@ -13,7 +13,7 @@ terraform {
 # -----------------------------------------------------------------------------
 
 resource "aws_acm_certificate" "certificate" {
-  provider                  = aws.us_east_1
+  provider                  = aws.certificate_owner
   domain_name               = var.domain_name
   subject_alternative_names = ["*.${var.domain_name}"]
   validation_method         = "DNS"
@@ -44,7 +44,7 @@ resource "aws_route53_record" "dns_validation" {
 # -----------------------------------------------------------------------------
 
 resource "aws_acm_certificate_validation" "certificate_validation" {
-  provider                = aws.us_east_1
+  provider                = aws.certificate_owner
   certificate_arn         = aws_acm_certificate.certificate.arn
   validation_record_fqdns = [aws_route53_record.dns_validation.fqdn]
 }
