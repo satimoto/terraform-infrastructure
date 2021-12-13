@@ -48,6 +48,11 @@ output "nat_security_group_id" {
   value       = module.network.nat_security_group_id
 }
 
+output "rds_security_group_id" {
+  description = "The security group ID of the RDS cluster"
+  value       = module.database.rds_security_group_id
+}
+
 output "rds_cluster_endpoint" {
   description = "The DNS address of the RDS instance"
   value       = module.database.rds_cluster_endpoint
