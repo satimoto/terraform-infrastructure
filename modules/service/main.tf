@@ -146,6 +146,29 @@ resource "aws_ecs_task_definition" "service" {
 }
 
 # -----------------------------------------------------------------------------
+# Create service discovery service
+# -----------------------------------------------------------------------------
+
+resource "aws_service_discovery_service" "service" {
+  name = var.service_name
+
+  dns_config {
+    namespace_id = var.service_discovery_namespace_id
+
+    dns_records {
+      ttl  = 10
+      type = "A"
+    }
+
+    routing_policy = "MULTIVALUE"
+  }
+
+  health_check_custom_config {
+    failure_threshold = var.service_discovery_failure_threshold
+  }
+}
+
+# -----------------------------------------------------------------------------
 # Create the ECS service
 # -----------------------------------------------------------------------------
 
@@ -169,28 +192,9 @@ resource "aws_ecs_service" "service" {
     container_port   = var.service_container_port
   }
 
+  service_registries {
+    registry_arn = aws_service_discovery_service.service.arn
+  }
+
   depends_on = [aws_alb_target_group.service, aws_alb_listener_rule.service]
-}
-
-# -----------------------------------------------------------------------------
-# Create service discovery service
-# -----------------------------------------------------------------------------
-
-resource "aws_service_discovery_service" "service" {
-  name = var.service_name
-
-  dns_config {
-    namespace_id = var.service_discovery_namespace_id
-
-    dns_records {
-      ttl  = 10
-      type = "A"
-    }
-
-    routing_policy = "MULTIVALUE"
-  }
-
-  health_check_custom_config {
-    failure_threshold = var.service_discovery_failure_threshold
-  }
 }
