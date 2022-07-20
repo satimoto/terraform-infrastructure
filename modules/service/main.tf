@@ -7,11 +7,12 @@ locals {
 # -----------------------------------------------------------------------------
 
 resource "aws_alb_target_group" "service" {
-  name        = var.service_name
-  port        = var.service_container_port
-  protocol    = "HTTP"
-  vpc_id      = var.vpc_id
-  target_type = "ip"
+  name             = var.service_name
+  port             = var.service_container_port
+  protocol         = var.target_protocol
+  protocol_version = var.target_protocol_version
+  vpc_id           = var.vpc_id
+  target_type      = "ip"
 
   health_check {
     interval = var.target_health_interval

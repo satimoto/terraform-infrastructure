@@ -117,6 +117,16 @@ variable "task_volumes" {
   default     = []
 }
 
+variable "target_protocol" {
+  description = "Protocol to use for routing traffic to the targets"
+  default     = "HTTP"
+}
+
+variable "target_protocol_version" {
+  description = "Protocol version to use for routing traffic to the targets"
+  default     = "HTTP1"
+}
+
 variable "target_health_interval" {
   description = "The approximate amount of time, in seconds, between health checks of an individual target"
   default     = 60
