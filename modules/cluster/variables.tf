@@ -13,18 +13,25 @@ variable "availability_zones" {
 }
 
 # -----------------------------------------------------------------------------
-# Module certificate
+# Module cluster
 # -----------------------------------------------------------------------------
 
-variable "domain_name" {
-  description = "The domain name the certificate and zone is associated to"
+variable "vpc_id" {
+  description = "The ID of the VPC"
 }
 
-variable "route53_zone_id" {
-  description = "The Route53 Zone ID"
+variable "private_subnet_cidrs" {
+  description = "The CIDRs of private subnets"
 }
 
-variable "with_dns_validation" {
-  description = "Add DNS validation record to Route53"
-  default     = true
+variable "ecs_cluster_name" {
+  description = "The name of the cluster"
+}
+
+variable "alb_security_group_id" {
+  description = "The security group ID of the ALB"
+}
+
+variable "nat_security_group_id" {
+  description = "The security group ID of the NAT"
 }

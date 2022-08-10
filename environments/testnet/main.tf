@@ -24,7 +24,7 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    bucket  = "satimoto-testnet-terraform"
+    bucket  = "satimoto-terraform-testnet"
     key     = "infrastructure.tfstate"
     region  = "eu-central-1"
     profile = "satimoto-testnet"
@@ -53,7 +53,7 @@ module "subdomain_zone" {
   route53_zone_id = data.aws_route53_zone.zone.zone_id
 }
 
-module "certificate" {
+module "us-certificate" {
   providers = {
     aws.certificate_owner = aws.us_east_1
     aws.zone_owner        = aws
@@ -64,6 +64,20 @@ module "certificate" {
 
   domain_name     = var.domain_name
   route53_zone_id = module.subdomain_zone.route53_zone_id
+}
+
+module "certificate" {
+  providers = {
+    aws.certificate_owner = aws
+    aws.zone_owner        = aws
+  }
+  source             = "../../modules/certificate"
+  availability_zones = var.availability_zones
+  region             = var.region
+
+  domain_name         = var.domain_name
+  route53_zone_id     = module.subdomain_zone.route53_zone_id
+  with_dns_validation = false
 }
 
 module "network" {
@@ -92,4 +106,29 @@ module "database" {
   rds_cluster_backup_retention_period = var.rds_cluster_backup_retention_period
   rds_cluster_engine                  = var.rds_cluster_engine
   rds_cluster_engine_mode             = var.rds_cluster_engine_mode
+}
+
+module "load-balancer" {
+  source             = "../../modules/load-balancer"
+  availability_zones = var.availability_zones
+  deployment_stage   = var.deployment_stage
+  region             = var.region
+
+  vpc_id              = module.network.vpc_id
+  public_subnet_ids   = module.network.public_subnet_ids
+  alb_name            = var.alb_name
+  acm_certificate_arn = module.certificate.acm_certificate_arn
+}
+
+module "cluster" {
+  source             = "../../modules/cluster"
+  availability_zones = var.availability_zones
+  deployment_stage   = var.deployment_stage
+  region             = var.region
+
+  vpc_id                           = module.network.vpc_id
+  private_subnet_cidrs             = module.network.private_subnet_cidrs
+  ecs_cluster_name                 = var.ecs_cluster_name
+  alb_security_group_id            = module.load-balancer.alb_security_group_id
+  nat_security_group_id            = module.network.nat_security_group_id
 }
