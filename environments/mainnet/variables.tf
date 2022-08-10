@@ -96,3 +96,19 @@ variable "rds_cluster_scaling_configuration_timeout_action" {
   description = "The action to take when the timeout is reached"
   default     = "RollbackCapacityChange"
 }
+
+# -----------------------------------------------------------------------------
+# Module load balancer
+# -----------------------------------------------------------------------------
+
+variable "alb_name" {
+  description = "The name of the LB"
+}
+
+# -----------------------------------------------------------------------------
+# Module cluster
+# -----------------------------------------------------------------------------
+
+variable "ecs_cluster_name" {
+  description = "The name of the cluster"
+}

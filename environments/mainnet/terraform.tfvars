@@ -4,7 +4,7 @@ availability_zones = ["eu-central-1a", "eu-central-1b", "eu-central-1c"]
 
 deployment_stage = "mainnet"
 
-forbidden_account_ids = ["759709512347"]
+forbidden_account_ids = ["909899099608"]
 
 # -----------------------------------------------------------------------------
 # Module certificate
@@ -35,3 +35,15 @@ rds_cluster_backup_retention_period = 7
 rds_cluster_engine = "aurora-postgresql"
 
 rds_cluster_engine_mode = "serverless"
+
+# -----------------------------------------------------------------------------
+# Module load balancer
+# -----------------------------------------------------------------------------
+
+alb_name = "satimoto"
+
+# -----------------------------------------------------------------------------
+# Module cluster
+# -----------------------------------------------------------------------------
+
+ecs_cluster_name = "satimoto"
