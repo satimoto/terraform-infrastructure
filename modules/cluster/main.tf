@@ -54,6 +54,16 @@ resource "aws_security_group_rule" "ecs_any_smtps_egress_rule" {
   description       = "SMTPS to Any from ECS"
 }
 
+resource "aws_security_group_rule" "ecs_private_nfs_egress_rule" {
+  type              = "egress"
+  from_port         = 2049
+  to_port           = 2049
+  protocol          = "tcp"
+  cidr_blocks       = var.private_subnet_cidrs
+  security_group_id = aws_security_group.cluster.id
+  description       = "NFS to Private from ECS"
+}
+
 resource "aws_security_group_rule" "ecs_private_rds_egress_rule" {
   type              = "egress"
   from_port         = 5432
@@ -74,6 +84,16 @@ resource "aws_security_group_rule" "ecs_private_rpc_egress_rule" {
   description       = "RPC to Private from ECS"
 }
 
+resource "aws_security_group_rule" "ecs_private_metrics_egress_rule" {
+  type              = "egress"
+  from_port         = 9100
+  to_port           = 9110
+  protocol          = "tcp"
+  cidr_blocks       = var.private_subnet_cidrs
+  security_group_id = aws_security_group.cluster.id
+  description       = "METRICS to Private from ECS"
+}
+
 resource "aws_security_group_rule" "ecs_any_icmp_egress_rule" {
   type              = "egress"
   from_port         = -1
@@ -82,6 +102,16 @@ resource "aws_security_group_rule" "ecs_any_icmp_egress_rule" {
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = aws_security_group.cluster.id
   description       = "ICMP to Any from ECS"
+}
+
+resource "aws_security_group_rule" "ecs_private_metrics_ingress_rule" {
+  type              = "ingress"
+  from_port         = 9100
+  to_port           = 9110
+  protocol          = "tcp"
+  cidr_blocks       = var.private_subnet_cidrs
+  security_group_id = aws_security_group.cluster.id
+  description       = "METRICS from Private to ECS"
 }
 
 resource "aws_security_group_rule" "ecs_private_rpc_ingress_rule" {
