@@ -54,6 +54,16 @@ resource "aws_security_group_rule" "ecs_any_smtps_egress_rule" {
   description       = "SMTPS to Any from ECS"
 }
 
+resource "aws_security_group_rule" "ecs_any_grpc_egress_rule" {
+  type              = "egress"
+  from_port         = 10009
+  to_port           = 10009
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.cluster.id
+  description       = "GRPC to Any from ECS"
+}
+
 resource "aws_security_group_rule" "ecs_private_nfs_egress_rule" {
   type              = "egress"
   from_port         = 2049
