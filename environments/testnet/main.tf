@@ -96,16 +96,18 @@ module "database" {
   deployment_stage   = var.deployment_stage
   region             = var.region
 
-  vpc_id                              = module.network.vpc_id
-  private_subnet_ids                  = module.network.private_subnet_ids
-  private_subnet_cidrs                = module.network.private_subnet_cidrs
-  nat_security_group_id               = module.network.nat_security_group_id
-  rds_cluster_identifier              = var.rds_cluster_identifier
-  rds_cluster_master_username         = var.rds_cluster_master_username
-  rds_cluster_master_password_ssm_key = var.rds_cluster_master_password_ssm_key
-  rds_cluster_backup_retention_period = var.rds_cluster_backup_retention_period
-  rds_cluster_engine                  = var.rds_cluster_engine
-  rds_cluster_engine_mode             = var.rds_cluster_engine_mode
+  vpc_id                                         = module.network.vpc_id
+  private_subnet_ids                             = module.network.private_subnet_ids
+  private_subnet_cidrs                           = module.network.private_subnet_cidrs
+  nat_security_group_id                          = module.network.nat_security_group_id
+  rds_cluster_identifier                         = var.rds_cluster_identifier
+  rds_cluster_master_username                    = var.rds_cluster_master_username
+  rds_cluster_master_password_ssm_key            = var.rds_cluster_master_password_ssm_key
+  rds_cluster_backup_retention_period            = var.rds_cluster_backup_retention_period
+  rds_cluster_engine                             = var.rds_cluster_engine
+  rds_cluster_engine_mode                        = var.rds_cluster_engine_mode
+  rds_cluster_scaling_configuration_max_capacity = var.rds_cluster_scaling_configuration_max_capacity
+  rds_cluster_scaling_configuration_min_capacity = var.rds_cluster_scaling_configuration_min_capacity
 }
 
 module "load-balancer" {

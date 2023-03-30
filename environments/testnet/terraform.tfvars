@@ -44,6 +44,10 @@ rds_cluster_engine = "aurora-postgresql"
 
 rds_cluster_engine_mode = "serverless"
 
+rds_cluster_scaling_configuration_max_capacity = 2
+
+rds_cluster_scaling_configuration_min_capacity = 2
+
 # -----------------------------------------------------------------------------
 # Module load balancer
 # -----------------------------------------------------------------------------
